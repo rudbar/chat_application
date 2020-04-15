@@ -31,7 +31,7 @@ def client_communication(person):
     # получаем имя пользователя
     name = client.recv(BUFSIZ).decode("utf8")
     msg = f"{name} присоединился к беседе!"
-    broadcast(msg) # вывод сообщения приветствия
+    broadcast(msg, name) # вывод сообщения приветствия
 
     while True:
         try:
