@@ -1,5 +1,5 @@
 # chat_application
-A complete chat application with front and back end features done using flask and socket server
+A complete chat application with front and back end features done using flask and socket server.
 
 How's this gonna work? Well, the first thing that will show up is the pop up window where you type your name and after that your get randomly put in the chat room. So every user will get dragged in the same chat room to shake the party. 
 
