@@ -30,7 +30,7 @@ def client_communication(person):
 
     # получаем имя пользователя
     name = client.recv(BUFSIZ).decode("utf8")
-    msg = f"{name} присоединился к беседе!"
+    msg = bytes(f"{name} присоединился к беседе!", "utf8")
     broadcast(msg, name) # вывод сообщения приветствия
 
     while True:
