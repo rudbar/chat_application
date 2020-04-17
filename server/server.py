@@ -20,7 +20,7 @@ def broadcast(msg, name):
     # отправляем новые сообщения всем пользователям
     for person in persons:
         client = person.client
-        client.send(bytes(name + ": ", "utf8") + msg)
+        client.send(bytes(name, "utf8") + msg)
 
 
 def client_communication(person):
@@ -30,22 +30,24 @@ def client_communication(person):
 
     # получаем имя пользователя
     name = client.recv(BUFSIZ).decode("utf8")
+    person.set_name(name)
     msg = bytes(f"{name} присоединился к беседе!", "utf8")
-    broadcast(msg, name) # вывод сообщения приветствия
+    broadcast(msg, "") # вывод сообщения приветствия
 
     while True:
         try:
             msg = client.recv(BUFSIZ)
-            print(f"{name}: ", msg.decode("utf8"))
 
             if msg == bytes("{quit}", "utf8"):
-                broadcast(f"{name} покинул чат...", "")
-                client.send(bytes("{quit}", "utf8"))
                 client.close()
                 persons.remove(person)
+                broadcast(f"{name} покинул(-а) чат...", "")
+                print(f"[ОТКЛЮЧИЛСЯ] {name} отключился(-ась)")
                 break
             else:
-                broadcast(msg, name)
+                broadcast(msg, name+": ")
+                print(f"{name}: ", msg.decode("utf8"))
+
         except Exception as e:
             print("[ОШИБКА]", e)
             break

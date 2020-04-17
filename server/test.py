@@ -1,5 +1,6 @@
 from socket import AF_INET, socket, SOCK_STREAM 
 from threading import Thread
+import time
 
 # ГЛОБАЛЬНЫЕ КОНСТАНТЫ
 HOST = "localhost"
@@ -38,4 +39,6 @@ receive_thread = Thread(target=receive_messages)
 receive_thread.start()
 
 send_message("Ian")
+time.sleep(10)
 send_message("hello")
+send_message("{quit}")
