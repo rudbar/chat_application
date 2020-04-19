@@ -1,5 +1,5 @@
 from socket import AF_INET, socket, SOCK_STREAM 
-from threading import Thread
+from threading import Thread, Lock
 import time
 
 class Client:
@@ -16,14 +16,18 @@ class Client:
         receive_thread = Thread(target=self.receive_messages)
         receive_thread.start()
         self.send_message(name)
+        self.lock = Lock()
 
     def receive_messages(self):
     # получаем сообщения от серера
         while True:
             try:
                 msg = self.client_socket.recv(self.BUFSIZ).decode()
+
+                # безопасный доступ к памяти
+                self.lock.acquire()
                 self.messages.append(msg)
-                print(msg)
+                self.lock.release()
             except Exception as e:
                 print("[ОШИБКА]", e)
                 break 
@@ -35,4 +39,14 @@ class Client:
             self.client_socket.close()
 
     def get_messages(self):
-        return self.messages
+        messages_copy = self.messages[:]
+
+        # безопасный доступ к памяти
+        self.lock.acquire()
+        self.messages = []
+        self.lock.release()
+
+        return messages_copy
+
+    def disconnect(self):
+        self.send_message("{вышел}")

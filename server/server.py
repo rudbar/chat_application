@@ -41,7 +41,7 @@ def client_communication(person):
             if msg == bytes("{quit}", "utf8"):
                 client.close()
                 persons.remove(person)
-                broadcast(f"{name} покинул(-а) чат...", "")
+                broadcast(bytes(f"{name} покинул(-а) чат...", "utf8"), "")
                 print(f"[ОТКЛЮЧИЛСЯ] {name} отключился(-ась)")
                 break
             else:
