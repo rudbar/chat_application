@@ -57,8 +57,7 @@ def wait_for_connection():
     # Ожидание подключения нового пользователя, когда новый пользователь подключился, 
     # запускается новый поток
 
-    run = True
-    while run:
+    while True:
         try:
             client, addr = SERVER.accept()
             person = Person(addr, client)
@@ -67,7 +66,7 @@ def wait_for_connection():
             Thread(target=client_communication, args=(person,)).start()
         except Exception as e:
             print("[ОШИБКА]", e)
-            run = False
+            break
 
     print("СБОЙ НА СЕРВЕРЕ")
 
