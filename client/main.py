@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.secret_key = "helloyoullneverguessitcausebecause"
 
 
+
 @app.rout("/login")
 def login():
     return render_template("login.html")
@@ -24,6 +25,9 @@ def home():
     
     name = session[NAME_KEY]
     return render_template("index.html")
+
+def run():
+    print("нажато")
 
 if __name__ == "__main__":
     app.run(debug=True)
