@@ -30,9 +30,10 @@ def home():
     
     return render_template("index.html", **{"login":True, "session": session})
 
-@app.route("/run")
-def run():
-    print("нажато")
+@app.route("/run/", methods=["GET"])
+def run(url=None):
+    msg = request.args.get("val")
+    print(msg)
     return "none"
 
 if __name__ == "__main__":
