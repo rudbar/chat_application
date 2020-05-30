@@ -6,21 +6,23 @@ $(function() {
             function(data) {
 
             });
-        return false;
-    });
 });
 
-function validate(name) {
-    if(name.length >= 2){
-        return true;
-    }
-    return false;
-}
+window.addEventListener("load", function(){
+    var update_loop = setInterval(update, 100);
+    update();
+});
 
-fetch('/get_messages')
-    .then(function (resopnse) {
-            return response.text();
-    }).then(function (text) {
-            console.log('GET response text:');
-            console.log(text);
+
+function update(){
+    fetch('/get_messages')
+                .then(function (resopnse) {
+                        return response.text();
+                }).then(function (text) {
+                    
+                        document.getElementById("test").innerText = text;
+                });
+        return false;
     });
+
+}

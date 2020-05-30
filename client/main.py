@@ -42,8 +42,8 @@ def home():
     client = Client(session[NAME_KEY])
     return render_template("index.html", **{"login":True, "session": session})
 
-@app.route("/run/", methods=["GET"])
-def send_message(url=None):
+@app.route("/send_message", methods=["GET"])
+def send_message():
     global client
     msg = request.args.get("val")
     if client:
@@ -58,13 +58,13 @@ def get_messages():
 
 
 def update_messages():
-    msgs = []
+    global messages
     run = True
     while run:
         time.sleep(0.1)
         if not client: continue
         new_messages = client.get_messages()
-        msgs.extend(new_messages)
+        messages.extend(new_messages)
 
         for msg in new_messages:
             if msg == "{вышел}":
@@ -74,5 +74,5 @@ def update_messages():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
     Thread(target=update_messages).start()
+    app.run(debug=True)
